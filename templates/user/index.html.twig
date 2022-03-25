@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1><i>User index</i></h1>
+
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>NumTel</th>
+                <th>Password</th>
+                <th>MailAdress</th>
+                <th>DateNaissance</th>
+                <th>Whoami</th>
+                <th>BlocRaison</th>
+                <th>Unbloc</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.numTel }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.mailAdress }}</td>
+                <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ user.whoami }}</td>
+                <td>{{ user.blocRaison }}</td>
+                <td>{{ user.unbloc ? user.unbloc|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}"><button class="btn btn-sm btn-outline-primary">Détails</button></a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><button class="btn btn-sm btn-outline-primary">Modifier</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_new') }}"><button class="btn btn-sm btn-outline-primary">Créer</button></a>
+{% endblock %}
