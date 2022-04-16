@@ -1,2 +1,50 @@
 {% extends 'base_front.html.twig' %}
 
+{% block form %}
+
+    <form class="login100-form validate-form">
+					<span class="login100-form-title p-b-43">
+						Connectez-vous pour continuer
+					</span>
+
+
+        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+            <input class="input100" type="text" name="email">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Email</span>
+        </div>
+
+
+        <div class="wrap-input100 validate-input" data-validate="Password is required">
+            <input class="input100" type="password" name="pass">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Password</span>
+        </div>
+
+        <div class="flex-sb-m w-full p-t-3 p-b-32">
+
+
+            <div>
+                <a href="#" class="txt1">
+                    Mot de passe oublié?
+                </a>
+            </div>
+        </div>
+
+
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn">
+                Login
+            </button>
+        </div>
+
+        <br>
+        <br>
+        <a style="margin-left: 380px" href="{{ path('app_user_new_inscri') }}">S'inscrire</a>
+
+
+
+    </form>
+
+
+{% endblock %}

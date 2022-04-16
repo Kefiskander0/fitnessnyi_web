@@ -20,6 +20,7 @@ class User
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank(message="Nom obligatoire !" )
      */
     private $nom;
 
@@ -30,23 +31,37 @@ class User
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Adresse obligatoire !" )
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=8)
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = " Num° de téléphone doit être égale à {{ limit }} charactères",
+     *      maxMessage = "Num° de téléphone doit être égale à {{ limit }} charactères"
+     * )
      */
     private $numTel;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Mot de passe obligatoire !" )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = " Votre mot de passe doit depassé {{ limit }} charactères",
+     *      maxMessage = "Votre mot de passe ne doit pas depassé {{ limit }} charactères"
+     * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="Email obligatoire !" )
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email!")
      */
     private $mailAdress;
 
@@ -57,6 +72,7 @@ class User
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank(message="qui êtes-vous?" )
      */
     private $whoami;
 
