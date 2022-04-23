@@ -2,21 +2,23 @@
 
 {% block form %}
 
-    <form class="login100-form validate-form">
-					<span class="login100-form-title p-b-43">
+    <form  action="{{ path('app_login') }}" class="login100-form " style="margin-top: -200px">
+        <img style="width:250px;height:250px;margin-left: 100px"  src="{{ asset('frontassets/images/logo.png') }}">
+
+        <span class="login100-form-title p-b-43">
 						Connectez-vous pour continuer
 					</span>
 
 
-        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-            <input class="input100" type="text" name="email">
+        <div class="wrap-input100 " >
+            <input class="input100"  id="mailAdresse" type="text" name="mailAdresse">
             <span class="focus-input100"></span>
             <span class="label-input100">Email</span>
         </div>
 
 
-        <div class="wrap-input100 validate-input" data-validate="Password is required">
-            <input class="input100" type="password" name="pass">
+        <div class="wrap-input100 ">
+            <input class="input100"  id="passworde" type="password" name="passworde">
             <span class="focus-input100"></span>
             <span class="label-input100">Password</span>
         </div>
@@ -25,23 +27,22 @@
 
 
             <div>
-                <a href="#" class="txt1">
+                <a href="{{ path('app_send_mail') }}" class="txt1">
                     Mot de passe oublié?
                 </a>
             </div>
         </div>
 
-
         <div class="container-login100-form-btn">
             <button class="login100-form-btn">
                 Login
             </button>
+            <br>
         </div>
 
         <br>
         <br>
         <a style="margin-left: 380px" href="{{ path('app_user_new_inscri') }}">S'inscrire</a>
-
 
 
     </form>

@@ -15,15 +15,99 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+
+    // listing users
     /**
      * @Route("/", name="app_user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(Request $request,UserRepository $userRepository): Response
     {
+        $nom="";
+        $nom=$request->query->get('nomuser');
+        if($nom==""){
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
+        }else{
+            return $this->render('user/index.html.twig', [
+                'users' => $userRepository->findByNameUser($nom),
+
+            ]);
+        }
     }
+
+
+    /**
+     * @Route("/allcoaches", name="app_coaches", methods={"GET"})
+     */
+    public function allcoachs(UserRepository $userRepository): Response
+    {
+        return $this->render('user/showall/coaches.html.twig', [
+            'users' => $userRepository->findallCoachs(),
+        ]);
+    }
+
+    /**
+     * @Route("/allsportifs", name="app_sportifs", methods={"GET"})
+     */
+    public function allsportifs(UserRepository $userRepository): Response
+    {
+        return $this->render('user/showall/sportifs.html.twig', [
+            'users' => $userRepository->findallsportifs(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/alladmins", name="app_admins", methods={"GET"})
+     */
+    public function alladmins(UserRepository $userRepository): Response
+    {
+        return $this->render('user/showall/admins.html.twig', [
+            'users' => $userRepository->findalladmins(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/allgerants", name="app_gérants", methods={"GET"})
+     */
+    public function allgerants(UserRepository $userRepository): Response
+    {
+        return $this->render('user/showall/gerants.html.twig', [
+            'users' => $userRepository->findallgerants(),
+        ]);
+    }
+
+
+
+
+    //adding users
+
+
+
+    /**
+     * @Route("/newadmin", name="app_user_new_admin", methods={"GET", "POST"})
+     */
+    public function newadmin(Request $request, UserRepository $userRepository): Response
+    {
+        $admin = new User();
+        $form = $this->createForm(UserType::class, $admin);
+        $form->handleRequest($request);
+        $admin->setWhoami("Admin");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($admin);
+            return $this->redirectToRoute('app_user_new_admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/New_Users_from_admin/newadmin.html.twig', [
+            'user' => $admin,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
 
     /**
      * @Route("/new", name="app_user_new", methods={"GET", "POST"})
@@ -33,17 +117,64 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
+        $user->setWhoami("Coach");
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user);
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('user/new.html.twig', [
+        return $this->render('user/New_Users_from_admin/newcoach.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
     }
+
+
+
+    /**
+     * @Route("/newsportif", name="app_user_new_sporitf", methods={"GET", "POST"})
+     */
+    public function newsportif(Request $request, UserRepository $userRepository): Response
+    {
+        $sportif = new User();
+        $form = $this->createForm(UserType::class, $sportif);
+        $form->handleRequest($request);
+        $sportif->setWhoami("Sportif");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($sportif);
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/New_Users_from_admin/newsportif.html.twig', [
+            'user' => $sportif,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/newgerant", name="app_user_new_gerant", methods={"GET", "POST"})
+     */
+    public function newgerant(Request $request, UserRepository $userRepository): Response
+    {
+        $gerant = new User();
+        $form = $this->createForm(UserType::class, $gerant);
+        $form->handleRequest($request);
+        $gerant->setWhoami("Gérant");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($gerant);
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/New_Users_from_admin/newgerant.html.twig', [
+            'user' => $gerant,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
 
     /**
      * @Route("/{id}", name="app_user_show", methods={"GET"})
@@ -85,4 +216,10 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
+
+
 }

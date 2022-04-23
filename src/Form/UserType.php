@@ -22,6 +22,8 @@ class UserType extends AbstractType
             ->add('whoami')
             ->add('blocRaison')
             ->add('unbloc')
+
+
         ;
     }
 

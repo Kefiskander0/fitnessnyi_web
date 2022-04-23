@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Scalar\String_;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -62,15 +63,71 @@ class UserRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?User
+
+    public function findOneByMailAddressAndPassword( User $user): ?User
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('u.mailAdress = :val')
+            ->andWhere('u.password = :vall')
+            ->setParameter('val', $user->getMailAdress())
+            ->setParameter('vall', $user->getPassword())
+
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+
+
+
+    public function findallCoachs(){
+        $query=$this->getEntityManager()
+            ->createQuery('SELECT c FROM App\Entity\User c WHERE c.whoami=:whoami')
+        ->setParameter('whoami','Coach');
+        return $query->getResult();
+
+}
+
+    public function findalladmins(){
+        $query=$this->getEntityManager()
+            ->createQuery('SELECT c FROM App\Entity\User c WHERE c.whoami=:whoami')
+            ->setParameter('whoami','Admin');
+        return $query->getResult();
+
+    }
+    public function findallsportifs(){
+        $query=$this->getEntityManager()
+            ->createQuery('SELECT c FROM App\Entity\User c WHERE c.whoami=:whoami')
+            ->setParameter('whoami','Sportif');
+        return $query->getResult();
+
+    }
+    public function findallgerants(){
+        $query=$this->getEntityManager()
+            ->createQuery('SELECT c FROM App\Entity\User c WHERE c.whoami=:whoami')
+            ->setParameter('whoami','Gérant');
+        return $query->getResult();
+
+    }
+
+
+    public function findByNameUser($name){
+        $query=$this->getEntityManager()
+            ->createQuery('SELECT c FROM App\Entity\User c WHERE
+             c.nom Like :name or c.prenom Like :prenom or c.adresse Like :adresse or c.numTel Like :numTel
+              or c.mailAdress Like :mailAdress or c.dateNaissance Like :dateNaissance
+              or c.blocRaison Like :blocRaison ')
+            ->setParameter('name','%'.$name.'%')
+            ->setParameter('prenom','%'.$name.'%')
+            ->setParameter('adresse','%'.$name.'%')
+            ->setParameter('numTel','%'.$name.'%')
+            ->setParameter('mailAdress','%'.$name.'%')
+            ->setParameter('dateNaissance','%'.$name.'%')
+            ->setParameter('blocRaison','%'.$name.'%')
+     ;
+
+
+        return $query->getResult();
+    }
+
 }

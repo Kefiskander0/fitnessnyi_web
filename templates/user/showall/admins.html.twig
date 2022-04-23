@@ -1,38 +1,25 @@
 {% extends 'base_back.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Utilisateurs{% endblock %}
 
 {% block body %}
-    <h1><i>Tous les utilisateurs</i></h1>
+    <h1><i>Tous les administrateurs:</i></h1>
     <br>
-    <br>
-
-    <form  action="{{ path('app_user_index') }}" >
-        <div class="form-group">
-        <input  class="form-control" style="width: 200px" id="nomuser" type="text" name="nomuser" value="" placeholder="Rechercher par nom">
-        <br>
-
-        <button class="btn btn-sm btn-outline-primary">
-            Rechercher
-        </button><br><br>
-        </div></form>
-
 
     <table class="table" >
         <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse</th>
-                <th>NumTel</th>
-                <th>Password</th>
-                <th>MailAdress</th>
-                <th>DateNaissance</th>
-                <th>Rôle</th>
-                <th>BlocRaison</th>
-                <th>Unbloc</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Adresse</th>
+            <th>NumTel</th>
+            <th>Password</th>
+            <th>MailAdress</th>
+            <th>DateNaissance</th>
+            <th>Raison de blocage</th>
+            <th>date de déblocage</th>
+            <th>Gérer</th>
+        </tr>
         </thead>
         <tbody>
         {% for user in users %}
@@ -44,7 +31,6 @@
                 <td>{{ user.password }}</td>
                 <td>{{ user.mailAdress }}</td>
                 <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
-                <td>{{ user.whoami }}</td>
                 <td>{{ user.blocRaison }}</td>
                 <td>{{ user.unbloc ? user.unbloc|date('Y-m-d') : '' }}</td>
                 <td>
@@ -60,5 +46,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}"><button class="btn btn-sm btn-outline-primary">Créer</button></a>
 {% endblock %}
