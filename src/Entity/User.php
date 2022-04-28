@@ -87,6 +87,26 @@ use Symfony\Component\Validator\Constraints as Assert;
      */
     private $unbloc;
 
+
+     /**
+      * @var User
+      */
+     public  $connected;
+
+
+     public function getUserconnected(): ?User
+     {
+         return $this->connected;
+     }
+
+     public function setUserConnected(User $user): self
+     {
+         $this->connected = $user;
+
+         return $this;
+     }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -230,5 +250,21 @@ use Symfony\Component\Validator\Constraints as Assert;
      public function eraseCredentials()
      {
          // TODO: Implement eraseCredentials() method.
+     }
+
+
+
+
+
+     protected $captchaCode;
+
+     public function getCaptchaCode()
+     {
+         return $this->captchaCode;
+     }
+
+     public function setCaptchaCode($captchaCode)
+     {
+         $this->captchaCode = $captchaCode;
      }
  }

@@ -31,10 +31,10 @@ class UserloginController extends AbstractController
      */
     public function login(Request $request,UserRepository $userRepository): Response
     {
+        $userc=new User();
         $mailAdress="";
         $password="";
         $isemptyerror="";
-
         $mailAdress=$request->query->get('mailAdresse');
         $password=$request->query->get('passworde');
 
@@ -47,6 +47,9 @@ class UserloginController extends AbstractController
             if ($user->getMailAdress() != null && $user->getPassword() != null) {
                 $user1 = $userRepository->findOneByMailAddressAndPassword($user);
                 if ($user1 != null) {
+                    $userc->setUserConnected($user1);
+
+
                     if($user1->getBlocRaison()==null){
                         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
 
@@ -95,6 +98,11 @@ class UserloginController extends AbstractController
         return $this->render('inscription/index.html.twig', []
             );
     }
+
+
+
+
+
 
 
 }
